@@ -11,7 +11,6 @@ class MinesweeperApp {
     init() {
         this.cellManager = new CellManager();
         this.gridManager = new GridManager(this.cellManager);
-
     }
 }
 

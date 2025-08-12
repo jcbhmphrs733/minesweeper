@@ -58,4 +58,13 @@ export class CellManager {
     }
     console.log("Flags:", this.flags);
   }
+
+  getMineIndexes() {
+    const mines = []
+    this.mines.forEach(cell => {
+      mines.push(cell.dataset.index)
+    })
+    return mines
+  }
+
 }

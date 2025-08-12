@@ -1,5 +1,5 @@
 :root {
-    --cell-size:70px;
+    --cell-size: 30px;
 }
 
 body {
@@ -11,8 +11,10 @@ body {
     height: 660px;
     background-color: rgb(0, 0, 124);
     display: flex;
-    justify-content: center; /* centers child div horizontally */
-    align-items: center;     /* centers child div vertically */
+    justify-content: center;
+    /* centers child div horizontally */
+    align-items: center;
+    /* centers child div vertically */
 }
 
 #minefield {
@@ -24,6 +26,7 @@ body {
 .cell {
     background-color: rgb(143, 143, 143);
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .cell:hover {
