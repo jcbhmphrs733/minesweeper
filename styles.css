@@ -1,5 +1,5 @@
 :root {
-    --cell-size: 35px;
+    --cell-size:70px;
 }
 
 body {
@@ -7,23 +7,30 @@ body {
 }
 
 #game-container {
-    max-width: 550px;
-    min-height: 400px;
+    width: 1050px;
+    height: 660px;
     background-color: rgb(0, 0, 124);
-    /* up down centering */
-    align-content: center; 
+    display: flex;
+    justify-content: center; /* centers child div horizontally */
+    align-items: center;     /* centers child div vertically */
 }
 
 #minefield {
+    margin: 0 auto;
     display: inline-grid;
     background-color: rgb(112, 0, 0);
 }
 
 .cell {
-    background-color: gray;
-    border: 1px, solid black;
+    background-color: rgb(143, 143, 143);
+    border: 1px solid black;
 }
 
 .cell:hover {
-    background-color: rgb(99, 99, 99);
+    filter: brightness(1.2);
+}
+
+
+.flagged {
+    background-color: rgb(161, 5, 5);
 }

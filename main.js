@@ -9,14 +9,15 @@ class MinesweeperApp {
     }
 
     init() {
-    //     this.cellManager = new CellManager();
-        this.gridManager = new GridManager();
+        this.cellManager = new CellManager();
+        this.gridManager = new GridManager(this.cellManager);
 
     }
 }
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('contextmenu', (event) => event.preventDefault());
     window.minesweeperApp = new MinesweeperApp();
 });
 
