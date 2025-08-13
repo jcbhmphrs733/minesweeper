@@ -23,13 +23,13 @@ body {
 }
 
 .cell {
-    background-color: #200e71;
+    background-color: #504a69;
     border: 1px solid #020a10;
     cursor: pointer;
 }
 
 .cell-opened {
-    background-color: #2e159c;
+    background-color: #a398d3;
     color: white;
     display: flex;
     justify-content: center;
@@ -38,7 +38,7 @@ body {
 
 
 .cell:hover {
-    filter: brightness(1.5);
+    filter: brightness(1.2);
 }
 
 
@@ -47,8 +47,11 @@ body {
     background-size: cover;
 }
 
-/* .mine {
-    background-image: url("./assets/images/mine.png");
-    background-size: cover;
-} */
+.mine {
+    /* background-color: #a398d3; */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 

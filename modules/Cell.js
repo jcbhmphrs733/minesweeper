@@ -1,30 +1,36 @@
 import { CONFIG } from "./CONFIG.js";
-import { Cell } from "./Cell.js";
 
-export class CellManager {
-  constructor() {
-    this.mines = null;
-    this.emptyCells = null;
-    this.numberedCells = null;
-    this.flags = null;
-    this.init();
+export class Cell {
+  constructor(value, index) {
+    this.value = value;
+    this.index = index;
+    this.flagged = false;
+
   }
 
-  init() {
-    this.mines = new Set();
-    this.emptyCells = new Set();
-    this.numberedCells = new Set();
-    this.flags = new Set();
+
+  createCell(index) {
+    const cell = document.createElement("div");
+
+    document.addEventListener("click", (event) => {
+      // left click
+      if (event.target === cell && event.button === 0) {
+        this.open(cell);
+      }
+    });
+    document.addEventListener("contextmenu", (event) => {
+      // right click
+      if (event.target === cell && event.button === 2) {
+        this.flag(cell);
+      }
+    });
+    cell.classList.add("cell", "cell-closed");
+    this.emptyCells.add(cell);
+    cell.dataset.index = index;
+    return cell;
   }
 
   
-
-  addMine(cell) {
-    cell.classList.add("mine");
-    this.mines.add(cell);
-    this.emptyCells.delete(cell);
-  }
-
   open(cell) {
     if (cell.classList.contains("cell-opened")) {
       // open recursively
