@@ -15,8 +15,8 @@ export class GridManager {
         this.minefield = document.getElementById('minefield');
         this.createGrid();
         this.placeMines();
-        this.placeNumbers();
     }
+
 
     createGrid() {
         this.minefield.style.gridTemplateColumns = `repeat(${CONFIG.CELLSACROSS},${CONFIG.CELLSIZE}px)`
@@ -34,7 +34,6 @@ export class GridManager {
     placeMines() {
         const mineCount = CONFIG.MINES;
         const allCells = Array.from(this.cellManager.emptyCells);
-
         for (let i = 0; i < mineCount; i++) {
             const randomIndex = Math.floor(Math.random() * allCells.length);
             const cell = allCells[randomIndex];
@@ -43,43 +42,5 @@ export class GridManager {
             this.cellManager.emptyCells.delete(cell)
         }
     }
-
-    placeNumbers() {
-        this.cellManager.emptyCells.forEach(cell => {
-            const index = parseInt(cell.dataset.index);
-            const adjacentMines = this.getAdjacentMines(CONFIG.CELLSACROSS, CONFIG.CELLSDOWN, index);
-            cell.innerHTML = adjacentMines > 0 ? adjacentMines : "";
-        });
-    }
-
-    getAdjacentMines(cols, rows, index) {
-        let mineCount = 0;
-        const neighbors = []
-        //neighbor checking logic
-        const row = Math.floor(index / cols);
-        const col = index % cols;
-
-        for (let dRow = -1; dRow <= 1; dRow++) {
-            for (let dCol = -1; dCol <= 1; dCol++) {
-                if (dRow === 0 && dCol === 0) continue; // skip self
-
-                const newRow = row + dRow;
-                const newCol = col + dCol;
-
-                // check boundaries and add valid neighbors
-                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-                    neighbors.push(newRow * cols + newCol)
-                }
-            }
-        }
-        neighbors.forEach(index => {
-            let mines = this.cellManager.getMineIndexes().map(Number)
-            if (mines.includes(index)) {
-                mineCount += 1
-            }
-        })
-        return mineCount;
-    }
-
 
 }
