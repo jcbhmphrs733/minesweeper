@@ -1,0 +1,110 @@
+export const THEMES = {
+  classic: {
+    name: "Classic",
+    background: "#161616ff",
+    gameContainer: "rgba(8, 5, 31, 1)",
+    cellClosed: "#aeaeaeff",
+    cellOpened: "#e0e0e0ff",
+    cellBorder: "#020a10",
+    uiBackground: "#2a2a2a",
+    uiBorder: "#444",
+    timer: "#4CAF50",
+    mineCounter: "#ff6b6b",
+    resetButton: "#3a3a3a",
+    resetButtonHover: "#4a4a4a",
+    resetButtonBorder: "#555",
+    flagColor: "#940000ff",
+    incorrectFlagColor: "orange",
+    correctFlagColor: "gold",
+    restartIcon: "🔄",
+    numberColors: ['', 'blue', 'green', 'red', 'navy', 'maroon', 'teal', 'black', 'gray']
+  },
+  
+  dark: {
+    name: "Dark Mode",
+    background: "#0d1117",
+    gameContainer: "#21262d",
+    cellClosed: "#30363d",
+    cellOpened: "#21262d",
+    cellBorder: "#484f58",
+    uiBackground: "#161b22",
+    uiBorder: "#30363d",
+    timer: "#58a6ff",
+    mineCounter: "#f85149",
+    resetButton: "#238636",
+    resetButtonHover: "#2ea043",
+    resetButtonBorder: "#30363d",
+    flagColor: "#f85149",
+    incorrectFlagColor: "#ff8c00",
+    correctFlagColor: "#ffd700",
+    restartIcon: "⚡",
+    numberColors: ['', '#58a6ff', '#3fb950', '#f85149', '#a5a5ff', '#ff7b72', '#79c0ff', '#f0f6fc', '#8b949e']
+  },
+  
+  ocean: {
+    name: "Ocean Blue",
+    background: "#001122",
+    gameContainer: "#002244",
+    cellClosed: "#004488",
+    cellOpened: "#0066cc",
+    cellBorder: "#000811",
+    uiBackground: "#003366",
+    uiBorder: "#0055aa",
+    timer: "#00ffff",
+    mineCounter: "#ff6b6b",
+    resetButton: "#006699",
+    resetButtonHover: "#0088cc",
+    resetButtonBorder: "#0055aa",
+    flagColor: "#ff4444",
+    incorrectFlagColor: "#ffaa00",
+    correctFlagColor: "#ffff00",
+    restartIcon: "🌊",
+    numberColors: ['', '#00ccff', '#00ff88', '#ff4444', '#0088ff', '#ff88cc', '#88ffff', '#ffffff', '#aaccff']
+  },
+  
+  forest: {
+    name: "Forest Green",
+    background: "#0d2818",
+    gameContainer: "#1a4a2e",
+    cellClosed: "#2d6a4f",
+    cellOpened: "#52b788",
+    cellBorder: "#081c0f",
+    uiBackground: "#1b4332",
+    uiBorder: "#2d6a4f",
+    timer: "#95d5b2",
+    mineCounter: "#d32f2f",
+    resetButton: "#40916c",
+    resetButtonHover: "#52b788",
+    resetButtonBorder: "#2d6a4f",
+    flagColor: "#d32f2f",
+    incorrectFlagColor: "#ff8f00",
+    correctFlagColor: "#ffd60a",
+    restartIcon: "🌲",
+    numberColors: ['', '#74c0fc', '#51cf66', '#ff6b6b', '#845ef7', '#ff8cc8', '#22b8cf', '#f8f9fa', '#868e96']
+  },
+  
+  sunset: {
+    name: "Sunset",
+    background: "#2d1b2e",
+    gameContainer: "#5d2e5d",
+    cellClosed: "#8b4a8b",
+    cellOpened: "#b85bb8",
+    cellBorder: "#1a0d1b",
+    uiBackground: "#4a2d4a",
+    uiBorder: "#7a4d7a",
+    timer: "#ffa726",
+    mineCounter: "#ef5350",
+    resetButton: "#ab47bc",
+    resetButtonHover: "#ba68c8",
+    resetButtonBorder: "#7a4d7a",
+    flagColor: "#ef5350",
+    incorrectFlagColor: "#ff9800",
+    correctFlagColor: "#ffc107",
+    restartIcon: "🌅",
+    numberColors: ['', '#42a5f5', '#66bb6a', '#ef5350', '#5c6bc0', '#ec407a', '#26c6da', '#fafafa', '#9e9e9e']
+  }
+};
+
+export function getTheme(themeName) {
+  return THEMES[themeName] || THEMES.classic;
+}

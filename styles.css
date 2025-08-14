@@ -1,20 +1,121 @@
 :root {
-    --cell-size: 30px;
+    /* Cell size will be set dynamically by ThemeManager from CONFIG */
+    --cell-size: 25px;
+    
+    /* Default theme colors (will be overridden by ThemeManager) */
+    --bg-color: #181818;
+    --game-container-bg: rgb(15, 12, 16);
+    --cell-closed-bg: #3b6150;
+    --cell-opened-bg: #a398d3;
+    --cell-border: #020a10;
+    --ui-bg: #2a2a2a;
+    --ui-border: #444;
+    --timer-color: #4CAF50;
+    --mine-counter-color: #ff6b6b;
+    --reset-button-bg: #3a3a3a;
+    --reset-button-hover: #4a4a4a;
+    --reset-button-border: #555;
+    --flag-color: red;
+    --incorrect-flag-color: orange;
+    --correct-flag-color: gold;
 }
 
 body {
-    background-color: #181818;
+    background-color: var(--bg-color);
 }
 
 #game-container {
     width: 1050px;
     height: 660px;
-    background-color: rgb(15, 12, 16);
+    background-color: var(--game-container-bg);
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    /* centers child div horizontally */
     align-items: center;
-    /* centers child div vertically */
+    gap: 20px;
+}
+
+#game-info-container {
+    background-color: var(--ui-bg);
+    border: 2px solid var(--ui-border);
+    border-radius: 8px;
+    width: calc(var(--cell-size) * 15 + 15 * 2px); /* Exact minefield width */
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+#game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+#timer {
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--timer-color);
+    text-align: center;
+    flex: 1;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+#timer::before {
+    content: "⏱";
+    margin-right: 5px;
+}
+
+#reset-button {
+    background: none;
+    border: none;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    color: var(--timer-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+#reset-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+#reset-button:active {
+    transform: scale(0.95);
+}
+
+#mine-counter {
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--mine-counter-color);
+    text-align: center;
+    flex: 1;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+#mine-counter::before {
+    content: "mines:";
+    margin-right: 5px;
 }
 
 #minefield {
@@ -23,35 +124,26 @@ body {
 }
 
 .cell {
-    background-color: #504a69;
-    border: 1px solid #020a10;
+    background-color: var(--cell-closed-bg);
+    border: 1px solid var(--cell-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    user-select: none;
 }
 
 .cell-opened {
-    background-color: #a398d3;
-    color: white;
+    background-color: var(--cell-opened-bg);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.flagged {
+    color: var(--flag-color);
+}
 
 .cell:hover {
     filter: brightness(1.2);
 }
-
-
-.flagged {
-    background-image: url("./assets/images/flag.png");
-    background-size: cover;
-}
-
-.mine {
-    /* background-color: #a398d3; */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
