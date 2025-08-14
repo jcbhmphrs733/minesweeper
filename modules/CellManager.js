@@ -1,7 +1,10 @@
 import { CONFIG } from "./CONFIG.js";
-import { Cell } from "./Cell.js";
 
 export class CellManager {
+  constructor(highScoreManager = null) {
+    this.highScoreManager = highScoreManager;
+  }
+  
   mines = new Set();
   emptyCells = new Set();
   numberedCells = new Set();
@@ -17,7 +20,14 @@ export class CellManager {
   initializing = false;
 
   createCell(index) {
-    const cell = new Cell(index);
+    // Create cell object with all necessary properties
+    const cell = {
+      mine: false,
+      index: index,
+      flagged: false,
+      element: this.createCellElement(index)
+    };
+    
     this.emptyCells.add(cell);
     this.cellsByIndex.set(index, cell);
 
@@ -37,6 +47,13 @@ export class CellManager {
     });
 
     return cell.element;
+  }
+
+  createCellElement(index) {
+    const cellElement = document.createElement("div");
+    cellElement.classList.add("cell", "cell-closed");
+    cellElement.dataset.index = index;
+    return cellElement;
   }
 
   addMine(cell) {
@@ -76,13 +93,10 @@ export class CellManager {
   openCell(cell) {
     if (cell.element.classList.contains("cell-opened") || cell.flagged || this.gameOver) return;
     
-    // Start timer on first cell opened (but only if not initializing)
-    if (!this.gameStartTime && !this.initializing) {
-      this.startTimer();
-      this.gameStarted = true;
-    }
+    // Open the cell (equivalent to the old cell.open() method)
+    cell.element.classList.remove("cell-closed");
+    cell.element.classList.add("cell-opened");
     
-    cell.open();
     if (cell.mine) {
       this.handleGameOver();
       return;
@@ -124,10 +138,28 @@ export class CellManager {
     ).length;
   }
 
-  handleWin() {
+  async handleWin() {
     console.log("You won!");
     this.gameOver = true;
-    this.stopTimer();
+    const finalTime = this.stopTimer();
+    
+    // Add score to high scores if manager exists
+    if (this.highScoreManager && finalTime > 0) {
+      // Check if this would be a high score first
+      const currentScores = this.highScoreManager.getHighScores();
+      const wouldBeHighScore = currentScores.length < 5 || finalTime < currentScores[4].time;
+      
+      if (wouldBeHighScore) {
+        // Show name input modal for high scores
+        const rank = await this.highScoreManager.showNameInput(finalTime);
+        if (rank) {
+          console.log(`New high score! Rank #${rank}`);
+        }
+      } else {
+        // Still add the score without showing modal
+        this.highScoreManager.addScore(finalTime, "Anonymous");
+      }
+    }
     
     // Optional: Auto-flag remaining mines
     this.mines.forEach(mine => {
@@ -200,6 +232,12 @@ export class CellManager {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+    
+    // Return the final time in milliseconds
+    if (this.gameStartTime) {
+      return Date.now() - this.gameStartTime;
+    }
+    return 0;
   }
 
   handleGameOver() {
@@ -213,7 +251,7 @@ export class CellManager {
         // Show unflagged mines
         mine.element.classList.remove("cell-closed");
         mine.element.classList.add("cell-opened");
-        mine.element.innerHTML = "💣";
+        mine.element.innerHTML = "M";
       }
       // Leave flagged mines as they are (flag stays, mine concealed)
     });
@@ -222,7 +260,7 @@ export class CellManager {
     this.flags.forEach((flaggedCell) => {
       if (!flaggedCell.mine) {
         // This flag is on a non-mine cell, show as incorrect
-        flaggedCell.element.innerHTML = `<span style='color: ${CONFIG.CURRENT_THEME.incorrectFlagColor};'><strong>!</strong></span>`;
+        flaggedCell.element.innerHTML = `<span style='color: ${CONFIG.CURRENT_THEME.incorrectFlagColor};'><strong>X</strong></span>`;
       }
     });
   }
@@ -257,6 +295,10 @@ export class CellManager {
   initializeGame() {
     // Initialize mine counter
     this.initializeMineCounter();
+    
+    // Start the timer immediately when game is initialized
+    this.startTimer();
+    this.gameStarted = true;
     
     // Set up reset button (only once)
     if (!this.resetButton.hasAttribute('data-initialized')) {

@@ -1,32 +1,14 @@
-:root {
-    /* Cell size will be set dynamically by ThemeManager from CONFIG */
-    --cell-size: 25px;
-    
-    /* Default theme colors (will be overridden by ThemeManager) */
-    --bg-color: #181818;
-    --game-container-bg: rgb(15, 12, 16);
-    --cell-closed-bg: #3b6150;
-    --cell-opened-bg: #a398d3;
-    --cell-border: #020a10;
-    --ui-bg: #2a2a2a;
-    --ui-border: #444;
-    --timer-color: #4CAF50;
-    --mine-counter-color: #ff6b6b;
-    --reset-button-bg: #3a3a3a;
-    --reset-button-hover: #4a4a4a;
-    --reset-button-border: #555;
-    --flag-color: red;
-    --incorrect-flag-color: orange;
-    --correct-flag-color: gold;
-}
+/* Global Styles - All CSS variables are set dynamically by ThemeManager.js */
 
 body {
     background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
 }
 
 #game-container {
-    width: 1050px;
-    height: 660px;
+    width: 100vw;
+    height: 100vh;
     background-color: var(--game-container-bg);
     display: flex;
     flex-direction: column;
@@ -76,9 +58,7 @@ body {
     background: none;
     border: none;
     border-radius: 8px;
-    width: 44px;
-    height: 44px;
-    font-size: 18px;
+    font-size: 25px;
     color: var(--timer-color);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -87,15 +67,12 @@ body {
     justify-content: center;
     flex-shrink: 0;
     box-sizing: border-box;
+    
 }
 
 #reset-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: scale(1.1);
-}
-
-#reset-button:active {
-    transform: scale(0.95);
 }
 
 #mine-counter {
@@ -114,7 +91,7 @@ body {
 }
 
 #mine-counter::before {
-    content: "mines:";
+    content: "Mines:";
     margin-right: 5px;
 }
 
@@ -146,4 +123,169 @@ body {
 
 .cell:hover {
     filter: brightness(1.2);
+}
+
+/* High Score Styles */
+#highscore-container {
+    background-color: var(--ui-bg);
+    border: 2px solid var(--ui-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+#highscore-container h3 {
+    color: var(--timer-color);
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+#highscore-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+#highscore-list li {
+    padding: 8px 12px;
+    color: var(--timer-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+#highscore-list li.no-scores {
+    text-align: center;
+    color: var(--mine-counter-color);
+    font-style: italic;
+    justify-content: center;
+}
+
+.score-time {
+    font-weight: bold;
+    color: var(--timer-color);
+    min-width: 80px;
+}
+
+.score-name {
+    color: var(--mine-counter-color);
+    opacity: 0.9;
+    font-style: italic;
+    min-width: 80px;
+}
+
+.score-date {
+    color: var(--mine-counter-color);
+    opacity: 0.7;
+    margin-left: auto;
+}
+
+/* Name Input Modal Styles */
+.name-input-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+}
+
+.name-input-modal {
+    background: var(--ui-bg);
+    border: 2px solid var(--ui-border);
+    border-radius: 12px;
+    padding: 24px;
+    min-width: 320px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.name-input-modal h2 {
+    color: var(--timer-color);
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    margin: 0 0 12px 0;
+    font-weight: bold;
+}
+
+.name-input-modal p {
+    color: var(--mine-counter-color);
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    margin: 0 0 20px 0;
+    font-weight: bold;
+}
+
+#player-name-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--ui-border);
+    border-radius: 6px;
+    background: var(--cell-opened-bg);
+    color: #000000;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#player-name-input:focus {
+    border-color: var(--ui-border);
+    box-shadow: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: 2px solid var(--ui-border);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.modal-buttons button.primary {
+    background: var(--ui-bg);
+    color: var(--timer-color);
+    border-color: var(--ui-border);
+}
+
+.modal-buttons button.primary:hover {
+    background: var(--cell-closed-bg);
+    transform: translateY(-1px);
 }
